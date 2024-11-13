@@ -22,3 +22,6 @@ s =
 
 \end{document}
 --------
+
+For more information go on my Blog about it and read it:-
+https://medium.com/@aadeshtikhe24/efficient-fibonacci-computation-instantly-calculate-the-exact-nth-number-directly-no-recursion-ed13bb284c71
