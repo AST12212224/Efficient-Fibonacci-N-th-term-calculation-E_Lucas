@@ -22,8 +22,8 @@ s =
 \frac{n}{2} & \text{if } \;  n \; \text{ is even}.
 \end{cases}
 \]
-
 \end{document}
+
 --------
 
 ### Note on Fibonacci Term Calculation
