@@ -1,6 +1,6 @@
 # Efficient Fibonacci N-th Term Calculation
 
-This code and formula (below) provide an optimized method for directly computing the N-th Fibonacci term, eliminating unnecessary calculations and improving efficiency.
+This code and formula (below) provide an optimized method for directly computing the N-th Fibonacci term, eliminating unnecessary calculations and improving efficiency. It uses Edouard Lucas's method to calculate N'th Fibonacci term.
 
 ### Main Formula
 To compute the Fibonacci number directly, use the following formula. Copy it into a LaTeX editor to render the math beautifully:
