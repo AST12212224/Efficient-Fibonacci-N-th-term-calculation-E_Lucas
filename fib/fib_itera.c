@@ -7,7 +7,7 @@ long long fibonacci_iterative(int n) {
     if (n == 1) return 0;  // Base case: Fib(1) = 0
     if (n == 2 || n == 3) return 1;  // Base case: Fib(2) & Fib(3) = 1
 
-    long long prev1 = 0, prev2 = 1, fib = 1;
+    long long prev1 = 1, prev2 = 1, fib = 1;
     for (int i = 4; i <= n; i++) {  // Start from 4 because Fib(1,2,3) are pre-defined
         fib = prev1 + prev2;
         prev1 = prev2;
