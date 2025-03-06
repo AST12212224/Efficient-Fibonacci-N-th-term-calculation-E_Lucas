@@ -11,7 +11,7 @@ To compute the Fibonacci number directly, use the following formula. Copy it int
 
 \begin{document}
 
-\[
+$$
 F_n = \sum_{k=1}^{s} \frac{(n-k-1)!}{(k-1)!(n-2k)!}, \quad n > 1
 \]
 where 
@@ -21,7 +21,7 @@ s =
 \frac{n-1}{2} & \text{if } \; n \; \text{ is odd}, \\
 \frac{n}{2} & \text{if } \;  n \; \text{ is even}.
 \end{cases}
-\]
+$$
 \end{document}
 
 --------
