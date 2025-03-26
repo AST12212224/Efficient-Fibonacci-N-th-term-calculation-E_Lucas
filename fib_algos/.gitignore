@@ -1,3 +1,0 @@
-git add .gitignore
-git commit -m "Ignore Pascals_Fibbo_RP.pdf file"
-git push origin main
