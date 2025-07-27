@@ -65,7 +65,6 @@ int main() {
         uint64_t time_ns = (uint64_t)(end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec);
         double time_sec = (double)time_ns / 1e9; // Convert to seconds
 
-        // ✅ FIXED: Corrected %lu to %llu for uint64_t
         fprintf(file, "%d,%Lf,%.12f,%llu\n", i, sum, time_sec, time_ns);
         printf("N = %d, Result: %Lf, Time taken: %.12f seconds (%llu ns)\n", i, sum, time_sec, time_ns);
     }
