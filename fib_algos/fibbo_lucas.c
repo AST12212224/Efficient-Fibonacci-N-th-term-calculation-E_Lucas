@@ -1,77 +1,55 @@
 #include <stdio.h>
 #include <time.h>
-#include <stdint.h>
+#include <gmp.h>
 
-long long binomial_coefficient(int h, int p) {
-    if (p > h) {
-        return 0;
+void fibonacci_lucas_gmp(unsigned long n, mpz_t result) {
+    if (n == 1) {
+        mpz_set_ui(result, 0);
+        return;
     }
-    if (p == 0 || p == h) {
-        return 1;
+    if (n == 2) {
+        mpz_set_ui(result, 1);
+        return;
     }
-    if (p > h - p) {
-        p = h - p;
+    
+    mpz_set_ui(result, 1);  // Base case
+    mpz_t binom;
+    mpz_init(binom);
+    
+    unsigned long s = n / 2;
+    for (unsigned long k = 1; k <= s; k++) {
+        mpz_bin_uiui(binom, n - k - 1, k);  // GMP binomial
+        mpz_add(result, result, binom);
     }
-    long long result = 1;
-    for (int i = 1; i <= p; i++) {
-        result *= (h - i + 1);
-        result /= i;
-    }
-    return result;
-}
-
-void fibbo_lucas(int N, long double *sum) {
-    *sum = (N == 1) ? 0 : 1;  // Single-line if-else condition
-
-    if (N == 1) return;  // Return early for N = 1
-
-    int s = N / 2;
-    int K = 2;
-    for (int i = 1; i < s; i++) {
-        int n = N - K - 1;
-        int r = K - 1;
-        int t = N - 2 * K;
-        *sum += (t > r) ? binomial_coefficient(n, r) : binomial_coefficient(n, t);
-        K++;
-    }
+    
+    mpz_clear(binom);
 }
 
 int main() {
-    int N;
-    long double sum;
-
-    // Open CSV file for writing
-    FILE *file = fopen("fibbo_lucas_results.csv", "w");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return 1;
-    }
-
-    // Write header to CSV file
-    fprintf(file, "Index,Fibbo Lucas Sum,Execution Time (seconds),Execution Time (nanoseconds)\n");
-
+    unsigned long N;
     printf("Enter N: ");
-    scanf("%d", &N);
-
-    for (int i = 1; i <= N; i++) {
+    scanf("%lu", &N);
+    
+    FILE *file = fopen("lucas_gmp_results.csv", "w");
+    fprintf(file, "n,Fibonacci,Time_ns\n");
+    
+    mpz_t fib;
+    mpz_init(fib);
+    
+    for (unsigned long i = 1; i <= N; i++) {
         struct timespec start, end;
-        clock_gettime(CLOCK_MONOTONIC_RAW, &start);  // Start time (high precision, raw clock)
-
-        fibbo_lucas(i, &sum);
-
-        clock_gettime(CLOCK_MONOTONIC_RAW, &end);  // End time
-
-        // Calculate elapsed time
-        uint64_t time_ns = (uint64_t)(end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec);
-        double time_sec = (double)time_ns / 1e9; // Convert to seconds
-
-        fprintf(file, "%d,%Lf,%.12f,%llu\n", i, sum, time_sec, time_ns);
-        printf("N = %d, Result: %Lf, Time taken: %.12f seconds (%llu ns)\n", i, sum, time_sec, time_ns);
+        
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        fibonacci_lucas_gmp(i, fib);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        
+        uint64_t time_ns = (end.tv_sec - start.tv_sec) * 1000000000UL + 
+                          (end.tv_nsec - start.tv_nsec);
+        
+        gmp_fprintf(file, "%lu,%Zd,%lu\n", i, fib, time_ns);
     }
-
-    // Close file
+    
+    mpz_clear(fib);
     fclose(file);
-    printf("Results saved to fibbo_lucas_results.csv\n");
-
     return 0;
 }
