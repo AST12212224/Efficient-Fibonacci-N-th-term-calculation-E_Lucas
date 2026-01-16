@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <gmp.h>
+#include <stdint.h>
 
 void fibonacci_lucas_gmp(unsigned long n, mpz_t result) {
     if (n == 1) {
